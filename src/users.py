@@ -1,18 +1,20 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import APIRouter, HTTPException
 
-app = FastAPI()
+router = APIRouter(prefix="/users", tags=["users"])
 
 users = {1: {"firstName":"Jack", "lastName":"Daniels", "Email":"jDaniel@gmail.com" }, 2: {"firstName":"Ben", "lastName":"Thomas", "Email":"benThomas@gmail.com" }}
 
-@app.get("/hello-world")
+"""
+@router.get("/hello-world")
 async def helloWorld():
     return {"message": "hello world"}
+"""
 
-@app.get("/users")
+@router.get("")
 async def getUsers():
     return users
 
-@app.get("/users/{id}")
+@router.get("/{id}")
 async def getUser(id: int):
     if id not in users:
         raise HTTPException(status_code=404, detail="User not found")
